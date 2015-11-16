@@ -25,9 +25,10 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Date"
         android:id="@+id/tvEventSpaceTimeInfo"
-        android:layout_below="@+id/tvEventTitle"
+        android:layout_below="@+id/tvEventDescription"
         android:layout_alignLeft="@+id/tvEventTitle"
-        android:layout_alignStart="@+id/tvEventTitle" />
+        android:layout_alignStart="@+id/tvEventTitle"
+        android:layout_marginTop="5dp" />
 
     <ImageView
         android:id="@+id/imgEventThumb"
@@ -45,7 +46,8 @@
         android:text="Price"
         android:id="@+id/tvEventPrice"
         android:layout_below="@+id/tvEventSpaceTimeInfo"
-        android:layout_alignLeft="@+id/tvEventTitle" />
+        android:layout_alignLeft="@+id/tvEventTitle"
+        android:layout_marginTop="2dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,6 +55,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Description"
         android:id="@+id/tvEventDescription"
-        android:layout_below="@+id/tvEventPrice"
-        android:layout_alignLeft="@+id/tvEventTitle" />
+        android:layout_below="@+id/tvEventTitle"
+        android:layout_alignLeft="@+id/tvEventTitle"
+        android:layout_marginTop="2dp" />
 </RelativeLayout>

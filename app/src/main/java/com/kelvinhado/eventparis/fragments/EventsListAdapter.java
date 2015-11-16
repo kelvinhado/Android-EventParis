@@ -45,9 +45,8 @@ public class EventsListAdapter extends ArrayAdapter {
         if (convertView == null)
         {
             convertView = mInflater.inflate(R.layout.item_event_list,parent,false);
-            holder = new ViewHolder();
 
-            //holder.number = (TextView) convertView.findViewById(R.id.tvStationNumber);
+            holder = new ViewHolder();
             holder.eventTitle = (TextView) convertView.findViewById(R.id.tvEventTitle);
             holder.eventSpaceTimeInfo = (TextView) convertView.findViewById(R.id.tvEventSpaceTimeInfo);
             holder.eventDescription = (TextView) convertView.findViewById(R.id.tvEventDescription);
@@ -70,14 +69,20 @@ public class EventsListAdapter extends ArrayAdapter {
         holder.eventTitle.setText(event.getFields().getTitle());
         holder.eventSpaceTimeInfo.setText(event.getFields().getSpace_time_info());
         holder.eventDescription.setText("Description : " + event.getFields().getDescription());
-        holder.eventPrice.setText("Price : " + event.getFields().getPricing_info());
+
+        // displaying the price
+        String eventPrice = event.getFields().getPricing_info();
+        if(eventPrice == null || eventPrice.equals("0")) {
+            holder.eventPrice.setText("");
+        }
+        else {
+            holder.eventPrice.setText("Price : " + eventPrice);
+        }
+
 
         if (holder.eventImgThumb != null) {
 //            new ImageDownloaderTask(holder.eventImgThumb).execute(event.getFields().getImage_thumb());
         }
-//
-//        new DownloadImageTask(holder.eventImgThumb)
-//                .execute(event.getFields().getImage_thumb());
 
 
         return convertView;
@@ -93,32 +98,4 @@ public class EventsListAdapter extends ArrayAdapter {
         ImageView eventImgThumb;
     }
 
-
-
-
-
-//    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-//        ImageView bmImage;
-//
-//        public DownloadImageTask(ImageView bmImage) {
-//            this.bmImage = bmImage;
-//        }
-//
-//        protected Bitmap doInBackground(String... urls) {
-//            String urldisplay = urls[0];
-//            Bitmap mIcon11 = null;
-//            try {
-//                InputStream in = new java.net.URL(urldisplay).openStream();
-//                mIcon11 = BitmapFactory.decodeStream(in);
-//            } catch (Exception e) {
-//                Log.e("Error", e.getMessage());
-//                e.printStackTrace();
-//            }
-//            return mIcon11;
-//        }
-//
-//        protected void onPostExecute(Bitmap result) {
-//            bmImage.setImageBitmap(result);
-//        }
-//    }
 }

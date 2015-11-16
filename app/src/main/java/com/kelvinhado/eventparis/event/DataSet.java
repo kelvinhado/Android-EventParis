@@ -32,6 +32,7 @@ public class DataSet {
 
 /**
     -download images thumb for listview /details
-
-
+    (nav drawer not working
+    - main activity must implement each callbacks !?
+    - issue : list > detail OK, detail > list RELOAD DATA ! not good !
  **/
