@@ -1,9 +1,11 @@
 package com.kelvinhado.eventparis;
 
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -37,14 +39,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        /** Floating button **/
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity
         // display the list fragment !
             final EventsListFragment eventsListFragment = EventsListFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayoutMainActivity, eventsListFragment)
+                .replace(R.id.frameLayoutMainActivity, eventsListFragment, Tags.TAG_FRAGMENT_EVENT_LIST)
                 .commit();
 
 
@@ -146,10 +149,18 @@ public class MainActivity extends AppCompatActivity
 
         // replace the current list fragment by the eventDetailsFragment using the id
         final EventDetailsFragment eventDetailsFragment = EventDetailsFragment.newInstance(event.getRecordid());
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayoutMainActivity, eventDetailsFragment)
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.frameLayoutMainActivity, eventDetailsFragment)
+//                .addToBackStack("ok")
+//                .commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .hide(getSupportFragmentManager().findFragmentByTag(Tags.TAG_FRAGMENT_EVENT_LIST))
+                .add(R.id.frameLayoutMainActivity, eventDetailsFragment, Tags.TAG_FRAGMENT_EVENT_DETAILS)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
                 .commit();
-
     }
 
     @Override
