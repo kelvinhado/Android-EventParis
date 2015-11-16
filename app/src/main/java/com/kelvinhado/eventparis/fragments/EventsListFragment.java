@@ -21,7 +21,7 @@ import com.kelvinhado.eventparis.network.VolleyApplication;
 
 public class EventsListFragment extends ListFragment {
 
-    onEventSelectedListenner mListener = null;
+    OnEventSelectedListenner mListener = null;
     private Events events;
     private EventsListAdapter lvAdapter;
 
@@ -94,7 +94,7 @@ public class EventsListFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (onEventSelectedListenner) activity;
+            mListener = (OnEventSelectedListenner) activity;
         } catch (ClassCastException e) {
             // Unchecked exception.
             throw new ClassCastException(activity.toString()
@@ -116,7 +116,7 @@ public class EventsListFragment extends ListFragment {
     }
 
     public // Interface interne
-    interface onEventSelectedListenner {
+    interface OnEventSelectedListenner {
         void onEventSelected(Event event);
     }
 

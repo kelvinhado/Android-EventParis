@@ -14,7 +14,14 @@ import com.kelvinhado.eventparis.event.DataSet;
 @JsonIgnoreProperties
 public class EventsRequest extends JacksonRequest {
 
+    private static final String date_start = "2015";
+    private static final String row = "2015";
+    private static final String sort = "-date_start";
+
+
     private static final String url = "http://opendata.paris.fr/api/records/1.0/search?dataset=evenements-a-paris&facet=updated_at&facet=tags&facet=department&facet=region&facet=city&facet=date_start&facet=date_end&refine.date_start=2015&refine.updated_at=2015&rows=100&sort=-date_start";
+//   private static final String url = "http://opendata.paris.fr/api/records/1.0/search?dataset=evenements-a-paris&rows=100";
+
 
 
     public EventsRequest(Response.Listener<DataSet> listener, Response.ErrorListener errorListener) {

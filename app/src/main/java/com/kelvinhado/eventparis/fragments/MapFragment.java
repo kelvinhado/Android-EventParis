@@ -16,18 +16,20 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.kelvinhado.eventparis.R;
+import com.kelvinhado.eventparis.event.Event;
+import com.kelvinhado.eventparis.event.Storage;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MapFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentMapInteractionListener} interface
  * to handle interaction events.
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class MapFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentMapInteractionListener mListener;
     MapView mMapView;
     private GoogleMap googleMap;
     /**
@@ -73,22 +75,32 @@ public class MapFragment extends Fragment {
         }
 
         googleMap = mMapView.getMap();
-        // latitude and longitude
-        double latitude = 17.385044;
-        double longitude = 78.486671;
 
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("Hello Maps");
 
-        // Changing marker icon
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        for(Event event : Storage.global_dataset.getRecords()) {
+            // add marker
+            double latitude = event.getFields().getLatlon()[0];
+            double longitude = event.getFields().getLatlon()[1];
+            String title = event.getFields().getTitle();
+            // create marker
+            MarkerOptions marker = new MarkerOptions().position(
+                    new LatLng(latitude, longitude)).title(title);
 
-        // adding marker
-        googleMap.addMarker(marker);
+            // Changing marker icon
+            marker.icon(BitmapDescriptorFactory
+                    .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
+            // adding marker
+            googleMap.addMarker(marker);
+
+        }
+
+
+
+
+        // set camera position
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
+                .target(new LatLng(48.8534100, 2.3488000)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
@@ -103,7 +115,7 @@ public class MapFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentMapInteraction(uri);
         }
     }
 
@@ -111,10 +123,10 @@ public class MapFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnFragmentMapInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement onFragmentMapInteractionListener");
         }
     }
 
@@ -134,9 +146,9 @@ public class MapFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentMapInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onFragmentMapInteraction(Uri uri);
     }
 
 

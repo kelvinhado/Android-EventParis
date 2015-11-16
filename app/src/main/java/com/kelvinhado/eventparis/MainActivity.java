@@ -1,5 +1,6 @@
 package com.kelvinhado.eventparis;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,25 +16,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.kelvinhado.eventparis.event.DataSet;
 import com.kelvinhado.eventparis.event.Event;
-import com.kelvinhado.eventparis.event.Storage;
+import com.kelvinhado.eventparis.fragments.EventDetailsFragment;
 import com.kelvinhado.eventparis.fragments.EventsListFragment;
 import com.kelvinhado.eventparis.fragments.MapFragment;
-import com.kelvinhado.eventparis.network.EventsRequest;
-import com.kelvinhado.eventparis.network.VolleyApplication;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-                    EventsListFragment.onEventSelectedListenner {
+        implements  NavigationView.OnNavigationItemSelectedListener,
+                    EventsListFragment.OnEventSelectedListenner,
+                    MapFragment.OnFragmentMapInteractionListener{
 
+    //TODO delete this textview
     private TextView tvHello;
 
-    /* This application will dislpay a list of event
-
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,14 +135,27 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /*
 
+    Fragment interactions
+     */
 
 
     @Override
     public void onEventSelected(Event event) {
-      Log.d("DEBUG // MainActivity :", Double.toString(event.getFields().getLatlon()[1]));
+
+        // replace the current list fragment by the eventDetailsFragment using the id
+        final EventDetailsFragment eventDetailsFragment = EventDetailsFragment.newInstance(event.getRecordid());
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayoutMainActivity, eventDetailsFragment)
+                .commit();
+
     }
 
+    @Override
+    public void onFragmentMapInteraction(Uri uri) {
+
+    }
 
 
 
@@ -191,6 +199,11 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // replace the current fragment by the mapFragment
+            final MapFragment mapFragment = MapFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frameLayoutMainActivity, mapFragment)
+                    .commit();
             return true;
         }
 
@@ -202,7 +215,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Log.d("STATES", Integer.toString(id));
         if (id == R.id.nav_calendar) {
             // Handle the camera action
         } else if (id == R.id.nav_guide) {

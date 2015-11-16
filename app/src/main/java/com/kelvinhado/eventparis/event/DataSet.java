@@ -28,3 +28,10 @@ public class DataSet {
                 '}';
     }
 }
+
+
+/**
+    -download images thumb for listview /details
+
+
+ **/

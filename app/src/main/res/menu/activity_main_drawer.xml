@@ -4,10 +4,12 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_calendar" android:icon="@android:drawable/ic_menu_my_calendar"
             android:title="Calendar" />
-        <item android:id="@+id/nav_map" android:icon="@android:drawable/ic_dialog_map"
-            android:title="Paris Map" />
-        <item android:id="@+id/nav_guide" android:icon="@android:drawable/ic_menu_info_details"
-            android:title="Guide" />
+        <item   android:id="@+id/nav_map"
+                android:icon="@android:drawable/ic_dialog_map"
+                android:title="Paris Map" />
+        <item   android:id="@+id/nav_guide"
+                android:icon="@android:drawable/ic_menu_info_details"
+                android:title="Guide" />
         <item android:id="@+id/nav_settings" android:icon="@android:drawable/ic_menu_manage"
             android:title="Settings" />
     </group>
