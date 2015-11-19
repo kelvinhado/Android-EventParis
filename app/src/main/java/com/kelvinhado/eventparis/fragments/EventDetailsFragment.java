@@ -1,7 +1,6 @@
 package com.kelvinhado.eventparis.fragments;
 
 import android.support.v4.app.Fragment;
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kelvinhado.eventparis.R;
-
-import org.w3c.dom.Text;
+import com.kelvinhado.eventparis.event.Event;
+import com.kelvinhado.eventparis.event.Storage;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +26,7 @@ public class EventDetailsFragment extends Fragment {
     private static final String EVENT_ID = "recordid";
 
     private String eventId;
+    private Event event;
     private TextView tvTest;
 
     private OnFragmentInteractionListener mListener;
@@ -55,20 +55,35 @@ public class EventDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             eventId = getArguments().getString(EVENT_ID);
+            loadEventData(eventId);
         }
     }
+
+    /**
+     * Data have been already laod in the Storage class by the EventsListFragment.
+     * /!\ the event can be null !
+     * @param eventId is the Id of the event desired
+     */
+    private void loadEventData(String eventId) {
+        event = Storage.global_dataset.getEventById(eventId);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_event_details, container, false);
-        tvTest= (TextView) view.findViewById(R.id.tvTestDetails);
-        tvTest.setText(eventId);
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
+        tvTest = (TextView) view.findViewById(R.id.tvTestDetails);
+        tvTest.setText(event.toString());
         return view;
 
     }
 
+
+    /** **
+     *  This part is for interaction with the acitvity that will hold this fragment
+     */
 
 
 //    // TODO: Rename method, update argument and hook method into UI event

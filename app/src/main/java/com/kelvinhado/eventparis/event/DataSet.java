@@ -20,6 +20,10 @@ public class DataSet {
         return records;
     }
 
+    public Event getEventById(String eventId) {
+        return records.findEventById(eventId);
+    }
+
     @Override
     public String toString() {
         return "DataSet{" +
